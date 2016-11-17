@@ -1,0 +1,16 @@
+Function CheckDigit(ID)
+If ID = "" Or IsNull(ID) Then CheckDigit = "": Exit Function
+Dim n, length, cd
+n = Right(ID, 7)
+length = Len(ID)
+If length < 7 Or length > 8 Or Not IsNumeric(Right(ID, 6)) Then
+    CheckDigit = "Error"
+Else
+    If length = 8 Then cd = 9 * (Asc(UCase(ID)) - 58)
+    cd = cd + 8 * (Asc(UCase(n)) - 64) + 7 * Mid(n, 2, 1) + 6 * Mid(n, 3, 1) + 5 * Mid(n, 4, 1) + 4 * Mid(n, 5, 1) + 3 * Mid(n, 6, 1) + 2 * Right(n, 1)
+    cd = 11 - cd
+    cd = cd - 11 * Int(cd / 11)
+    If cd = 10 Then cd = "A"
+    CheckDigit = cd
+End If
+End Function
